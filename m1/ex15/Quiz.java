@@ -1,10 +1,9 @@
 /*
-	Sean Thames
-	CIST-2372
-	2013-05-22
-	Quiz.java
-	Chapter 8
-	Exercise 15
+	Author:			Sean Thames
+	Class:			CIST-2372
+	Date:			2013-05-22
+	Filename:		Quiz.java
+	Assignment:		Chapter 8 Ex 15
 
 	Description:
 	Write an application that contains an array of 10 multiple-choice quiz
@@ -36,5 +35,10 @@ public class Quiz
 	public static void main(String[] args)
 	{
 		int i = 0; // iterator to be used later for the askQuestion loop
+		
+		String[] questions = new String[10]; // Array to store questions
+		String[] correctAnswers = new String[10]; // Array to store correct answers
+		
+		
 	}
 }
