@@ -43,7 +43,8 @@ public class Median2
 	{
 		Scanner input = new Scanner(System.in);
 		
-		final byte LIMIT = 9; 		// Maximum number of values to accept
+		final byte LIMIT = 9; 		// Maximum number of values to accept. 
+									// Is a byte because why not save a few bytes of memory
 		
 		int i = 0; 					// iterator for the input loop
 		
