@@ -11,3 +11,40 @@
  *	and display them and their median. Save the file as Median.java.
  *
  */
+
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Median
+{
+	public static void main(String[] args)
+	{
+		Scanner input = new Scanner(System.in);
+		int i = 0; // iterator for the input loop
+		String userInput = "";
+		double[] numbers = new double[9];
+		System.out.println("Please enter nine numbers.");
+		do 
+		{
+			System.out.print("Number " + (i + 1) + "/9: ");
+			userInput = input.nextLine();
+			try
+			{
+				numbers[i] = Double.parseDouble(userInput);
+				i++;
+			}
+			catch (Exception e)
+			{
+				System.out.println("Error: " + userInput + " is not a valid number");
+			}
+		} while (i < 9);
+		
+		Arrays.sort(numbers);
+		
+		System.out.print("\n\nYou entered: ");
+		for(Double num : numbers)
+			System.out.print(num + "   ");
+		
+		System.out.println("\nThe median value is " + numbers[4]);
+	}
+}
