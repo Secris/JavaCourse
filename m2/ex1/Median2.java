@@ -14,20 +14,26 @@
 
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Median2
 {
 	public static double getMedian(double[] nums)
 	{
 		double median = 0.0;
+		int[] middle = new int[2];
 		
 		if (nums.length % 2 == 0)
 		{
-			// TODO code for an even length array
+			middle[0] = (nums.length / 2) - 1;	// nums.length counts from "1" instead of "0"
+			middle[1] = middle[0] + 1; 			// get the other middle value in an even length array
+			median = nums[middle[0]] + nums[middle[1]];
+			median = median / 2.0;
 		}
 		else
 		{
-			// TODO code for an odd length array
+			middle[0] = nums.length / 2;
+			median = nums[middle[0]];
 		}
 		
 		return median;
@@ -36,28 +42,50 @@ public class Median2
 	public static void main(String[] args)
 	{
 		Scanner input = new Scanner(System.in);
-		int i = 0; // iterator for the input loop
-		String userInput = "";
-		double[] numbers = new double[9];
-		double median = 0.0; // value to hold the middle location of the array
 		
-		System.out.println("Please enter up to nine numbers.\nTo stop just press enter.");
+		final byte LIMIT = 9; 		// Maximum number of values to accept
+		
+		int i = 0; 					// iterator for the input loop
+		
+		String userInput = "";
+		ArrayList<String> numberList = new ArrayList<String>();
+		
+		double[] numbers; 
+		
+		System.out.println("Please enter up to " + LIMIT + " numbers.\nTo stop just press enter.");
 		do 
 		{
-			System.out.print("Number " + (i + 1) + "/9: ");
+			System.out.print("Number " + (i + 1) + "/" + LIMIT + ": ");
 			userInput = input.nextLine().toLowerCase();
-			if (userInput.equals(""))
-				break;
-			try
+			if (!(userInput.isEmpty()))
 			{
-				numbers[i] = Double.parseDouble(userInput);
-				i++;
+				try
+				{
+					Double.parseDouble(userInput);
+					numberList.add(userInput);
+					i++;
+				}
+				catch (Exception e)
+				{
+					System.out.println("Error: " + userInput + " is not a valid number");
+					if (userInput.indexOf(' ') > -1)
+						System.out.println("Please use a single line for each number.");
+				}
 			}
-			catch (Exception e)
-			{
-				System.out.println("Error: " + userInput + " is not a valid number");
-			}
-		} while (i < 9);
+		} while (!(userInput.isEmpty()) && i < LIMIT);
+		
+		if (numberList.size() == 0) 
+		{
+			System.out.println("\nNothing was entered exiting...");
+			return; // Kills program if not even one value was entered
+		}
+		else
+		{
+			numbers = new double[numberList.size()]; // Create an array the same size as the List
+		}
+		
+		for(int c = 0; c < numberList.size(); c++) 
+			numbers[c] = Double.parseDouble(numberList.get(c).toString());			// Transfer list values to the array
 		
 		Arrays.sort(numbers);
 		
@@ -66,5 +94,7 @@ public class Median2
 			System.out.print(num + "   ");
 		
 		System.out.println("\nThe median value is " + getMedian(numbers));
+		
+		input.close();
 	}
 }

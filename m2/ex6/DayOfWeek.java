@@ -12,3 +12,11 @@
  *	and 9 to 6 on Saturday. Save the file as DayOfWeek.java
  *
  */
+ 
+ public class DayOfWeek
+ {
+ 	public static void main(String[] args)
+ 	{
+ 	
+ 	}
+ }
