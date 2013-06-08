@@ -16,3 +16,32 @@
 	Surface Area of a Rectangle = hw
 	Surface Area of a Rectangular Prism = 2hw + 2wd + 2hd
 */
+
+public class DemoSquare
+{
+	public static void main(String[] args)
+	{
+		/*
+			Technically a square and a cube have sides that are all the same 
+			value. However since it specifies otherwise I am assuming it wants 
+			your values to look something like this.
+		*/
+		double height = 10.0;
+		double width = 8.0;
+		double depth = 13.0;
+		
+		Square aSquare = new Square(10.0, 8.0);
+		Cube aCube = new Cube(12.0, 10.0, 13.0);
+		
+		System.out.println("The square has the following values: ");
+		System.out.println("Height: " + aSquare.getHeight());
+		System.out.println("Width: " + aSquare.getWidth());
+		System.out.println("Surface Area: " + aSquare.computeSurfaceArea());
+		
+		System.out.println("\nThe cube has the following values: ");
+		System.out.println("Height: " + aCube.getHeight());
+		System.out.println("Width: " + aCube.getWidth());
+		System.out.println("Depth: " + aCube.getDepth());
+		System.out.println("Surface Area: " + aCube.computeSurfaceArea());
+	}
+}

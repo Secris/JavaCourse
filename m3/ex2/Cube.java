@@ -24,7 +24,7 @@ public class Cube extends Square
 	private double depth;
 	private double surfaceArea;
 	
-	public Square(double h, double w, double d)
+	public Cube(double h, double w, double d)
 	{
 		super(h, w);
 		depth = d;
