@@ -1,7 +1,7 @@
 /**
 	Programmer:			Sean Thames
 	Date:				2013-06-06
-	Filename:			.java
+	Filename:			InsuredPackage.java
 	Assignment: 		Ch 10 Ex 6
 	Description:		Create a class named "Package" with data fields for 
 	weight in ounces, shipping method, and shipping cost. The shipping method is
