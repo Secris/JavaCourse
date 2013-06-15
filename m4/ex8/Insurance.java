@@ -19,3 +19,27 @@
  * displayed, and then create the appropriate object. Save the files as
  * Life.java, Health.java, Insurance.java, and UseInsurance.java.
 */
+
+public abstract class Insurance
+{
+	private String insuranceType;
+	protected double monthlyCost;
+	
+	public Insurance(String type)
+	{
+		insuranceType = type;
+	}
+
+	public String getInsuranceType()
+	{
+		return insuranceType;
+	}
+
+	public double getMonthlyCost()
+	{
+		return monthlyCost;
+	}
+
+	public abstract void setCost();
+	public abstract void display();
+}
