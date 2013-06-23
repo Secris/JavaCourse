@@ -211,8 +211,9 @@ public class GadgetOrderTaker2
 		String total = money.format(o.getTotalPrice() + o.getShippingHandling());
 		
 		String message = new String();
-		message = "Order #\t" + o.getOrderNumber() + "\n";
-		message += "Customer: \t" + o.getCustomerName() + "\n";
+		message = "Order #" + o.getOrderNumber() + "\n";
+		message += "Customer: " + o.getCustomerName() + "\n";
+		message += "Address: " + o.getCustomerAddress() + "\n";
 		message += "-------------------------------------\n";
 		
 		for(int item : orderedItems)
