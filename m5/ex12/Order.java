@@ -1,9 +1,9 @@
 /**
 Programmer:			Sean Thames
 Date:				2013-06-20
-Filename:			Gadget.java
+Filename:			Order.java
 Assignment:			Ch 12 Ex 12
-Description:			a) Gadgets by Mail sells man interesting items through
+Description:		a) Gadgets by Mail sells man interesting items through
 its catalogs. Write an application that prompts the user for order detauls,
 including item numbers and quantity of each item ordered, based on the 
 available items shown in Table 12-2.
@@ -36,7 +36,7 @@ Create the following classes:
 	retrieve the field values.
  >	Order, which contains an order number, customer name, and address 
 	(assume you need just a street address, not city, state, and zip code);
-	a list of item numbers order (up to four); the total price of all items
+	a list of item numbers ordered (up to four); the total price of all items
 	ordered; and a shipping and handling fee for the order. Include a 
 	constructor to set the field values and get methods to retrieve the 
 	field values.
@@ -73,3 +73,77 @@ explanatory message and ending the application. Create a new application that
 handles all Exceptions by requiring the user to reenter the offending data. 
 Save the file as GadgetOrderTaker2.java
 */
+
+public class Order
+{
+	private int orderNumber;
+	private String customerName;
+	private String customerAddress;
+	private int[] itemList;
+	private double totalPrice;
+	private double shippingHandling;
+	
+	public Order(int orderNum, String name, String address, int[] items, double price, double sh)
+	{
+		setOrderNumber(orderNum);
+		setCustomerName(name);
+		setCustomerAddress(address);
+		setItemList(items);
+		setTotalPrice(price);
+		setShippingHandling(sh);
+	}
+	
+	public int getOrderNumber()
+	{
+		return orderNumber;
+	}
+	public void setOrderNumber(int num)
+	{
+		orderNumber = num;
+	}
+	
+	public String getCustomerName()
+	{
+		return customerName;
+	}
+	public void setCustomerName(String name)
+	{
+		customerName = name;
+	}
+	
+	public String getCustomerAddress()
+	{
+		return customerAddress;
+	}
+	public void setCustomerAddress(String address)
+	{
+		customerAddress = address;
+	}
+	
+	public int[] getItemList()
+	{
+		return itemList;
+	}
+	public void setItemList(int[] items)
+	{
+		itemList = items;
+	}
+	
+	public double getTotalPrice()
+	{
+		return totalPrice;
+	}
+	public void setTotalPrice(double price)
+	{
+		totalPrice = price;
+	}
+	
+	public double getShippingHandling()
+	{
+		return shippingHandling;
+	}
+	public void setShippingHandling(double sh)
+	{
+		shippingHandling = sh;
+	}
+}

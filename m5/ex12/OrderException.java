@@ -1,9 +1,9 @@
 /**
 Programmer:			Sean Thames
 Date:				2013-06-20
-Filename:			Gadget.java
+Filename:			OrderException.java
 Assignment:			Ch 12 Ex 12
-Description:			a) Gadgets by Mail sells man interesting items through
+Description:		a) Gadgets by Mail sells man interesting items through
 its catalogs. Write an application that prompts the user for order detauls,
 including item numbers and quantity of each item ordered, based on the 
 available items shown in Table 12-2.
@@ -73,3 +73,11 @@ explanatory message and ending the application. Create a new application that
 handles all Exceptions by requiring the user to reenter the offending data. 
 Save the file as GadgetOrderTaker2.java
 */
+
+public class OrderException extends Exception
+{
+	public OrderException(String message)
+	{
+		super(message);
+	}
+}

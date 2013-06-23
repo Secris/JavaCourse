@@ -1,9 +1,9 @@
 /**
 Programmer:			Sean Thames
 Date:				2013-06-20
-Filename:			Gadget.java
+Filename:			GadgetOrderTaker.java
 Assignment:			Ch 12 Ex 12
-Description:			a) Gadgets by Mail sells man interesting items through
+Description:		a) Gadgets by Mail sells man interesting items through
 its catalogs. Write an application that prompts the user for order detauls,
 including item numbers and quantity of each item ordered, based on the 
 available items shown in Table 12-2.
@@ -36,7 +36,7 @@ Create the following classes:
 	retrieve the field values.
  >	Order, which contains an order number, customer name, and address 
 	(assume you need just a street address, not city, state, and zip code);
-	a list of item numbers order (up to four); the total price of all items
+	a list of item numbers ordered (up to four); the total price of all items
 	ordered; and a shipping and handling fee for the order. Include a 
 	constructor to set the field values and get methods to retrieve the 
 	field values.
@@ -73,3 +73,185 @@ explanatory message and ending the application. Create a new application that
 handles all Exceptions by requiring the user to reenter the offending data. 
 Save the file as GadgetOrderTaker2.java
 */
+
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.text.NumberFormat;
+
+public class GadgetOrderTaker2
+{
+	private static Gadget[] gadgetList; // so I don't need to pass it
+	
+	public static void main(String[] args)
+	{
+		final int ORDER_NUMBER_SEED = 101;
+		
+		gadgetList = getGadgetList();
+		Order[] orderList = new Order[4];
+		
+		try 
+		{
+			for(int i = 0; i < orderList.length; i++)
+			{
+				orderList[i] = getOrder(ORDER_NUMBER_SEED + i);
+				if(orderList[i].getTotalPrice() == 0.0)
+					throw(new OrderException("Order #" + orderList[i].getOrderNumber() + " is blank."));
+			}
+			for(Order o: orderList)
+				displayOrder(o);
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			System.exit(1);
+		}
+	}
+	
+	public static Order getOrder(int number) throws OrderException
+	{
+		final int LIMIT = 100;
+		final double[] SHIPPING_SCALE = {24.00, 49.99};
+		final double[] SHIPPING_COST = {5.55, 8.55, 11.55};
+		
+		String customerName;
+		String customerAddress;
+		ArrayList<String> itemList = new ArrayList<String>();
+		int[] items;
+		int tempItem = 0;
+		double totalPrice = 0.0;
+		double shippingHandling;
+		Order order;
+		String userInput;
+		boolean again = true;
+		int i = 0;
+		int quantity;
+		
+		customerName = input("Please enter the customer name: ");
+		customerAddress = input("Please enter the customer address: ");
+		
+		
+		do
+		{
+			userInput = input("Enter item number: ");
+			try
+			{
+				tempItem = Integer.parseInt(userInput); // make sure it is a number
+				
+				if(tempItem != 999)
+				{
+					itemList.add(userInput);
+					if(getDescription(tempItem).equals(""))
+						throw(new OrderException("Invalid item number"));
+					userInput = input("Quantity of item #" + tempItem + ": ");
+					quantity = Integer.parseInt(userInput);
+					if(quantity > LIMIT)
+						throw(new OrderException(quantity + " exceeds the item quantity limit!"));
+					else
+						totalPrice += getCost(tempItem, quantity);
+				}
+				else
+					again = false;
+			}
+			catch(OrderException e)
+			{
+				JOptionPane.showMessageDialog(null, e.getMessage());
+				continue;
+			}
+			catch(NumberFormatException e)
+			{
+				JOptionPane.showMessageDialog(null, userInput + " is not a valid number.");
+				continue;
+			}
+		} while(again);
+		
+		if(itemList.size() > gadgetList.length)
+			throw(new OrderException("Items ordered exceeds available items!"));
+		else
+			items = new int[itemList.size()];
+		
+		for(i = 0; i < items.length; i++)
+		{
+			items[i] = Integer.parseInt(itemList.get(i));
+		}
+		
+		if(totalPrice < SHIPPING_SCALE[0])
+			shippingHandling = SHIPPING_COST[0];
+		else if (totalPrice > SHIPPING_SCALE[0] && totalPrice < SHIPPING_SCALE[1])
+			shippingHandling = SHIPPING_COST[1];
+		else
+			shippingHandling = SHIPPING_COST[2];
+		
+		order = new Order(number, customerName, customerAddress, items, totalPrice, shippingHandling);
+		
+		
+		return order;
+	}
+	public static String input(String s)
+	{
+		// This is easier than typing it dozens of times
+		return JOptionPane.showInputDialog(null, s);
+	}
+	public static double getCost(int num, int q) throws OrderException
+	{
+		for(Gadget g : gadgetList)
+			if(g.getItemNumber() == num)
+				return (g.getPrice() * q);
+				
+		throw(new OrderException("Item #" + num + " is not a valid item"));
+	}
+	
+	public static void displayOrder(Order o)
+	{
+		int[] orderedItems = o.getItemList();
+		
+		NumberFormat money = NumberFormat.getCurrencyInstance();
+		
+		String price = money.format(o.getTotalPrice());
+		String shipping = money.format(o.getShippingHandling());
+		String total = money.format(o.getTotalPrice() + o.getShippingHandling());
+		
+		String message = new String();
+		message = "Order #\t" + o.getOrderNumber() + "\n";
+		message += "Customer: \t" + o.getCustomerName() + "\n";
+		message += "-------------------------------------\n";
+		
+		for(int item : orderedItems)
+		{
+			message += item + "        ";
+			message += getDescription(item) + "\n";
+			
+		}
+		
+		message += "-------------------------------------\n";
+		message += "Price:    " + price + "\n";
+		message += "S/H:       " + shipping + "\n";
+		message += "Total:    " + total;
+		
+		JOptionPane.showMessageDialog(null, message);
+	}
+	public static String getDescription(int num)
+	{
+		for(Gadget g : gadgetList)
+		{
+			if(g.getItemNumber() == num)
+				return g.getDescription();
+		}
+		
+		return "";
+	}
+	
+	public static Gadget[] getGadgetList()
+	{
+		/* 
+		 * Did this because normally the item list would not be hard coded and 
+		 * you would call a function to load the list into memory.
+		 */
+		 Gadget[] gadgets = new Gadget[4];
+		 gadgets[0] = new Gadget(101, "Electric Hand warmer", 12.99);
+		 gadgets[1] = new Gadget(124, "Battery-operated plant waterer", 7.55);
+		 gadgets[2] = new Gadget(256, "Gerbil trimmer", 9.99);
+		 gadgets[3] = new Gadget(512, "Talking bookmark", 6.89);
+		 
+		 return gadgets;
+	 }
+}
