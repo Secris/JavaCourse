@@ -31,7 +31,7 @@ public class ReadStateFile
 		final String EMPTY_ACCT = "000";
 		String[] array = new String[4];
 		double balance;
-		double total;
+		double total = 0;
 
 		try
 		{
@@ -45,5 +45,53 @@ public class ReadStateFile
 			System.out.println("IO Exception");
 			System.out.println(e.getMessage());
 		}
+
+		try
+		{
+			InputStream iStream = new BufferedInputStream(Files.newInputStream(file));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(iStream));
+
+			System.out.println("\nAll non-default records:\n");
+			s = reader.readLine();
+
+			while(s != null)
+			{
+				array = s.split(delimiter);
+				if(!array[0].equals(EMPTY_ACCT))
+				{
+					balance = Double.parseDouble(array[3]);
+					System.out.println("ID #" + array[0] + " " + array[1] + " " + array[2] + " $" + array[3]);
+
+					total += balance;
+				}
+				s = reader.readLine();
+			}
+
+			System.out.println("Total of all balances is $" + total);
+
+			reader.close();
+		}
+		catch(Exception e)
+		{
+			System.out.println("Message: " + e);
+		}
+
+		try
+		{
+			FileChannel fc = (FileChannel)Files.newByteChannel(file, READ);
+			ByteBuffer buffer = ByteBuffer.wrap(data);
+			int findAcct;
+			System.out.print("\nEnter account to seek >> ");
+			findAcct = kb.nextInt();
+			fc.position(findAcct * RECSIZE);
+			fc.read(buffer);
+			s = new String(data);
+			System.out.println("Desired record: " + s);
+		}
+		catch(Exception e)
+		{
+			System.out.println("Message: " + e);
+		}
+
 	}
 }
