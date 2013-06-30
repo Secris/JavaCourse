@@ -1,7 +1,7 @@
 /**
  * Programmer:			Sean Thames
  * Date:				2013-06-20
- * Filename:			ReadBankAccountsSequentially.java
+ * Filename:			ReadBankAccountsRandomly.java
  * Assignment:			Ch 13 Ex 9
  *
  * Description:			A) The Rochester Bank maintains customer records
@@ -29,37 +29,75 @@
 import java.nio.file.*;
 import java.io.*;
 import static java.nio.file.StandardOpenOption.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.util.Scanner;
 
-public class ReadBankAccountsSequentially
+public class ReadBankAccountsRandomly
 {
 	public static void main(String[] args)
 	{
+		Scanner input = new Scanner(System.in);
+		String userInput;
+
 		Path filename = Paths.get("AccountRecords.txt");
 		Path file = filename.toAbsolutePath();
 
+		final String QUIT = "QUIT";
+
+		final String ACCOUNT_NUMBER_FORMAT = "0000";
+		final String NAME_FORMAT = "        ";
+		final int NAME_LENGTH = NAME_FORMAT.length();
+		final String BALANCE_FORMAT = "00000.00";
 		final String delimiter = ",";
+
+		String defaultRecord = ACCOUNT_NUMBER_FORMAT + delimiter + NAME_FORMAT + delimiter + BALANCE_FORMAT + System.getProperty("line.separator");
+		final int RECORD_SIZE = defaultRecord.length();
+
+		String acctString;
+		int acct;
+		byte[] data = defaultRecord.getBytes();
+		String s;
+
+		System.out.print("Enter the number of the account to view >> ");
+		userInput = input.nextLine();
 
 		try
 		{
-			InputStream inputFile = new BufferedInputStream(Files.newInputStream(file));
-			BufferedReader reader = new BufferedReader(new InputStreamReader(inputFile));
+			FileChannel fc = (FileChannel)Files.newByteChannel(file, READ);
 
-			String s = reader.readLine();
-
-			while(s != null)
+			while(!(userInput.equals(QUIT)))
 			{
-				String[] array = s.split(delimiter);
-				if(!((array[1].trim()).isEmpty()))
-					System.out.println("Acct #" + array[0] + "\tAcct Holder: " + array[1]+ "\tBalance: $" + array[2]);
+				ByteBuffer buffer = ByteBuffer.wrap(data);
+				acct = Integer.parseInt(userInput);
 
-				s = reader.readLine();
+				fc.position(acct * RECORD_SIZE);
+				fc.read(buffer);
+				s = new String(data);
+
+				prettyPrint(s.split(delimiter));
+
+				System.out.print("Enter the number of the account to view or " + QUIT + " >> ");
+				userInput = input.nextLine();
 			}
 
-			reader.close();
+			fc.close();
 		}
 		catch(Exception e)
 		{
 			System.out.println("Error message: " + e);
 		}
+
+		input.close();
+	}
+
+	public static void prettyPrint(String[] c)
+	{
+		StringBuilder sb = new StringBuilder();
+
+		for(String s : c)
+			sb.append(s + " ");
+
+		System.out.println(sb.toString());
 	}
 }
