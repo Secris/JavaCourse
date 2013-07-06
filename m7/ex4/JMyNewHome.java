@@ -1,7 +1,7 @@
 /**
  * Programmer:			Sean Thames
  * Date:				2013-06-30
- * Filename:			temp.java
+ * Filename:			JMyNewHome.java
  * Assignment:			Ch 14 Ex 4
  *
  * Description:			Write an application for a construction company to 
