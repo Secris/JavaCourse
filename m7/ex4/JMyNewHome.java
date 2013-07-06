@@ -63,6 +63,7 @@ public class JMyNewHome extends JFrame implements ItemListener
 		super("My New Home");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(WIDTH, HEIGHT);
+		setResizable(false);
 		setLayout(new FlowLayout());
 		
 		for(int i = 0; i < separator.length; i++)

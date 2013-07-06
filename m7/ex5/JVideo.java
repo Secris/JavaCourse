@@ -45,9 +45,9 @@ public class JVideo extends JFrame implements ActionListener
 	public JVideo()
 	{
 		super("Video Rental System");
-		setSize(WIDTH, HEIGHT);
-		setLayout(new FlowLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(WIDTH, HEIGHT);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		
 		add(top);

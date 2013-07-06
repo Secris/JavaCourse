@@ -46,9 +46,10 @@ public class JVideo2 extends JFrame implements ActionListener
 	public JVideo2()
 	{
 		super("Video Rental System");
-		setSize(WIDTH, HEIGHT);
-		setLayout(new FlowLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(WIDTH, HEIGHT);
+		setResizable(false);
+		setLayout(new FlowLayout());
 		setLocationRelativeTo(null);
 		
 		add(top);
