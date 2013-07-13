@@ -4,9 +4,9 @@
  * Filename:			JFontFrame.java
  * Assignment:			Ch 15 Ex 3
  *
- * Description:         Create a JFrame that holds four buttons with the names
- * of four different fonts. Display a demonstration JLabel using the font that 
- * the user selects. Save the file as JFontFrame.java
+ * Description:         Create a JFrame that holds four buttons with the
+ * names of four different fonts. Display a demonstration JLabel using the font 
+ * that the user selects. Save the file as JFontFrame.java
  */
 
 import javax.swing.*;
