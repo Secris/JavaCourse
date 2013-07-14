@@ -93,7 +93,7 @@ public class MineField2 extends JFrame implements ActionListener
 		
 		add(gameContainer, BorderLayout.CENTER);
 		drawGameGrid();
-		placeBomb(bombLocation);
+		// placeBomb(bombLocation); // Uncomment this if you want to know where it is
 		
 		toggleGame();
 	}
