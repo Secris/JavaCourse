@@ -1,7 +1,7 @@
 /**
  * Programmer:			Sean Thames
  * Date:				2013-07-11
- * Filename:			MineField.java
+ * Filename:			MineField2.java
  * Assignment:			Ch 15 Ex 12
  *
  * Description:         A) Create a Mine Field game in which the user attempts
@@ -35,33 +35,40 @@ import java.awt.event.*;
 import java.awt.Color;
 import java.util.Random;
 
-public class MineField extends JFrame implements ActionListener
+public class MineField2 extends JFrame implements ActionListener
 {
 	private Random random = new Random();
 	private final int NUMBER_OF_TILES = 20;
-	private final int NUMBER_OF_TURNS = 10;
+	
+	private int numberOfTurns = 99;
 	
 	private int timesSafe = 0;
 	private int bombLocation = 0;
 	
-	private final int WIDTH = 400;
-	private final int HEIGHT = 350;
+	private final int WIDTH = 650;
+	private final int HEIGHT = 450;
 	
 	private BorderLayout mainLayout = new BorderLayout();
-	private GridLayout gameLayout = new GridLayout(4, 5, 2, 2);
-	
-	private Container gameContainer = new Container();
+	private GridLayout gameLayout = new GridLayout(4, 5, 3, 3);
 	private CardLayout cards = new CardLayout();
 	
-	private JLabel title = new JLabel("Please click a square", JLabel.CENTER);
+	private Container difficultyContainer = new Container();
+	private Container gameContainer = new Container();
+	
+	private JLabel title = new JLabel("Please select a difficulty", JLabel.CENTER);
 	private JPanel[] bombPanels = new JPanel[NUMBER_OF_TILES];
 	private JButton[] bombButtons = new JButton[NUMBER_OF_TILES];
 	
 	private final String BOMB = "<html><font face=\"monospace\">&nbsp&nbsp;,-*<br>&nbsp;(_) BOOM!</font></html>";
 	private JLabel bomb = new JLabel(BOMB);
 	
+	private JButton easy = new JButton("Easy");
+	private JButton medium = new JButton("Intermediate");
+	private JButton hard = new JButton("Difficult");
 	
-	public MineField()
+	private boolean gameState = true;
+	
+	public MineField2()
 	{
 		super("MineField");
 		setSize(WIDTH, HEIGHT);
@@ -74,21 +81,47 @@ public class MineField extends JFrame implements ActionListener
 		bombLocation = random.nextInt(NUMBER_OF_TILES);
 		
 		add(title, BorderLayout.NORTH);
+		
+		add(difficultyContainer, BorderLayout.WEST);
+		difficultyContainer.setLayout(new BoxLayout(difficultyContainer, BoxLayout.PAGE_AXIS));
+		difficultyContainer.add(easy);
+		difficultyContainer.add(medium);
+		difficultyContainer.add(hard);
+		easy.addActionListener(this);
+		medium.addActionListener(this);
+		hard.addActionListener(this);
+		
 		add(gameContainer, BorderLayout.CENTER);
 		drawGameGrid();
+		placeBomb(bombLocation);
+		
+		toggleGame();
 	}
 	
 	public void actionPerformed(ActionEvent e)
 	{
-		timesSafe += 1;
 		JButton source = (JButton)e.getSource();
-		if(source == bombButtons[bombLocation])
-			goBoom(source);
-		else
-			fizzle(source);
 		
-		if(timesSafe >= NUMBER_OF_TURNS)
-			victory();
+		if(source == easy || source == medium || source == hard)
+		{
+			if(source == easy)
+				setDifficulty(1);
+			else if(source == medium)
+				setDifficulty(2);
+			else if(source == hard)
+				setDifficulty(3);
+		}
+		else
+		{
+			timesSafe += 1;
+			if(source == bombButtons[bombLocation])
+				goBoom(source);
+			else
+				fizzle(source);
+		
+			if(timesSafe >= numberOfTurns)
+				victory();
+		}
 	}
 	
 	private void drawGameGrid()
@@ -104,7 +137,11 @@ public class MineField extends JFrame implements ActionListener
 			bombButtons[i].addActionListener(this);
 		}
 	}
-
+	
+	private void placeBomb(int bl)
+	{
+		System.out.println("Location: " + bl);
+	}
 	private void goBoom(JButton b)
 	{
 		Container con = b.getParent();
@@ -136,9 +173,48 @@ public class MineField extends JFrame implements ActionListener
 		
 		revalidate();
 	}
+	private void toggleGame()
+	{
+		if(gameState)
+			gameState = false;
+		else
+			gameState = true;
+			
+		for(JButton a : bombButtons)
+			a.setEnabled(gameState);
+	}
+	private void disableDifficulty()
+	{
+		easy.setEnabled(false);
+		medium.setEnabled(false);
+		hard.setEnabled(false);
+	}
+	private void setDifficulty(int d)
+	{
+		switch(d)
+		{
+			case 1:
+				numberOfTurns = 5;
+				toggleGame();
+				disableDifficulty();
+				break;
+			case 2:
+				numberOfTurns = 10;
+				toggleGame();
+				disableDifficulty();
+				break;
+			case 3:
+				numberOfTurns = 15;
+				toggleGame();
+				disableDifficulty();
+				break;
+			default:
+				break;
+		}
+	}
 	public static void main(String[] args)
 	{
-		MineField game = new MineField();
+		MineField2 game = new MineField2();
 		game.setVisible(true);
 	}
 }
