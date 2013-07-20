@@ -18,40 +18,68 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.Color;
 
 public class JCalculateWeight extends JFrame implements ActionListener
 {
+	final String title = new String("Please enter your weight in pounds: ");
+	JTextField weightField = new JTextField(10);
+	JButton calcButton = new JButton("Calculate!");
+	
+	final int x = 20;
+	int y = 100;
+	
+	final int offset = 25;
+	
 	public JCalculateWeight()
 	{
 		super("Calculate weight");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setLayout(new FlowLayout());
+		setResizable(false);
+		
+		add(new JLabel(title));
+		add(weightField);
+		add(calcButton);
+		calcButton.addActionListener(this);
+		
+		Container con = getContentPane();
+		con.setBackground(Color.WHITE);
 	}
 
-	public void actionPerformed(ActionEvent action)
-	{
-	}
-
-	public void paint(Graphics gr)
-	{
-		super.paint(gr);
-	}
-
-	private double convertToOunces(double w)
+	private static double convertToOunces(double w)
 	{
 		return (w * 16);
 	}
-	private double convertToKilo(double w)
+	private static double convertToKilo(double w)
 	{
 		return (w / 2.204623);
 	}
-	private double convertToMetricTon(double w)
+	private static double convertToMetricTon(double w)
 	{
 		return (w / 2204.623);
+	}
+
+	public void actionPerformed(ActionEvent ae)
+	{
+		Graphics gr = getGraphics();
+		String weightString = weightField.getText();
+		double weight = Double.parseDouble(weightString);
+		
+		gr.setColor(Color.WHITE);
+		gr.fillRect(x - 30, y - 30, 300, 250);
+		
+		gr.setColor(Color.BLACK);
+		gr.drawString("Ounces: " + convertToOunces(weight), x, y);
+		gr.drawString("Kilograms: " + convertToKilo(weight), x, y + offset);
+		gr.drawString("Metric tons: " + convertToMetricTon(weight), x, y + (offset *2));
 	}
 
 	public static void main(String[] args)
 	{
 		JCalculateWeight frame = new JCalculateWeight();
-		setSize(300, 250);
-		setVisible(true);
+		frame.setSize(300, 250);
+		frame.setVisible(true);
 	}
 }
