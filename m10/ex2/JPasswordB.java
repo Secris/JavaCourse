@@ -22,7 +22,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class JPasswordA extends JApplet implements ActionListener
+public class JPasswordB extends JApplet implements ActionListener
 {
 	private final String PASSWORD = "Rosebud";
 	
@@ -52,7 +52,7 @@ public class JPasswordA extends JApplet implements ActionListener
 	{
 		String input = passwordField.getText();
 		
-		if(input.equals(PASSWORD))
+		if(input.equalsIgnoreCase(PASSWORD))
 		{
 			accessGranted.setVisible(true);
 			accessDenied.setVisible(false);

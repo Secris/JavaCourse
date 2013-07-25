@@ -22,9 +22,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class JPasswordA extends JApplet implements ActionListener
+public class JPasswordC extends JApplet implements ActionListener
 {
-	private final String PASSWORD = "Rosebud";
+	private final String[] PASSWORD = {"Rosebud", "Redrum", "Jason", "Surrender", "Dorothy"};
 	
 	private Container con = getContentPane();
 	private JLabel passwordLabel = new JLabel("Password:");
@@ -52,15 +52,18 @@ public class JPasswordA extends JApplet implements ActionListener
 	{
 		String input = passwordField.getText();
 		
-		if(input.equals(PASSWORD))
+		for(String p : PASSWORD)
 		{
-			accessGranted.setVisible(true);
-			accessDenied.setVisible(false);
-		}
-		else
-		{
-			accessDenied.setVisible(true);
-			accessGranted.setVisible(false);
+			if(input.equalsIgnoreCase(p))
+			{
+				accessGranted.setVisible(true);
+				accessDenied.setVisible(false);
+			}
+			else
+			{
+				accessDenied.setVisible(true);
+				accessGranted.setVisible(false);
+			}
 		}
 	}
 }
