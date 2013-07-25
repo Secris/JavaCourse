@@ -16,3 +16,13 @@
  * file as JCalculatePay2.java.
  */
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class JCalculatePay extends JApplet implements ActionListener
+{
+	public void init()
+	{
+	}
+}
