@@ -14,11 +14,5 @@ m6 = Chapter 13 - File I/O
 m7 = Chapter 14 - Intro to Swing  
 m8 = Chapter 15 - Advanced GUIs  
 m9 = Chapter 16 - Graphics  
-  
-In Progress
------------
 m10 = Chapter 17 - Applets, Images, and Sound  
   
-Remaining
----------
-NONE
