@@ -3,6 +3,8 @@ JavaCourse
 
 Repo for all software written for my Java programming courses. Files are organized according to the module in which the assignment was due.
 
+The book for this course is: http://a.co/jdcoma6
+
 Completed
 ---------
 m1 = Chapter 8 - Arrays  
